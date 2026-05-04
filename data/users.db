@@ -1,0 +1,8 @@
+{"_id":"u_admin","name":"Direção Escolar","email":"admin@school.com","password":"$2b$10$GnyH6irk/vEK7fNu4WO9F.Hh9peQ9gqw68iNnNx247z9XinV.0/Lm","role":"admin","avatar":"AD"}
+{"_id":"u_parent1","name":"Maria Oliveira","email":"maria@email.com","password":"$2b$10$YXLaOwwYtQTEMGC7hv86nu.NlYA0Aymacf76XPrSzevH3SpxVSCQi","role":"parent","avatar":"MO","studentIds":["s1"]}
+{"_id":"u_parent2","name":"João Costa","email":"joao@email.com","password":"$2b$10$x1/ttJpcZIbKcfs.t8J5veJFnwIvINd.N8K2cEwdl36D6zH8w57sm","role":"parent","avatar":"JC","studentIds":["s2"]}
+{"_id":"u_prof1","name":"Prof. Carlos Lima","email":"carlos@school.com","password":"$2b$10$VryGTuUBj6W.VeG1AhS1GeomSXVb2C84j9LRlBezYN9J8OfCclO..","role":"teacher","avatar":"CL","subjects":["Matemática","Física"]}
+{"_id":"u_prof2","name":"Prof. Ana Souza","email":"ana@school.com","password":"$2b$10$ShBrvHWdSPvSamA.QBEsf./0RhY.083ZeYNRuYcuetofNr1DQt4J.","role":"teacher","avatar":"AS","subjects":["Português","Literatura"]}
+{"_id":"u_prof3","name":"Prof. Roberto Silva","email":"roberto@school.com","password":"$2b$10$Ls.vjnd/hWujNQNJW7nHKewrbNAn3h3un0HOlCC6ssJq8Z7SLD7Pu","role":"teacher","avatar":"RS","subjects":["História","Geografia"]}
+{"_id":"u_student1","name":"Lucas Oliveira","email":"lucas@school.com","password":"$2b$10$YHZkALRWAVUlwv55Hqeosegl40l03QP.UqSM2w9Gm5TRm/wtbdQeW","role":"student","avatar":"LO","studentId":"s1"}
+{"_id":"u_student2","name":"Sofia Costa","email":"sofia@school.com","password":"$2b$10$Z2.XuG2F5e4EzuHC6oFmueCupyoErEHjB4TDaiwpdTx1z3tnqzHxa","role":"student","avatar":"SC","studentId":"s2"}

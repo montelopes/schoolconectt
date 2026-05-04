@@ -1,0 +1,4 @@
+{"_id":"s1","name":"Lucas Oliveira","age":14,"grade":"9º Ano A","photo":"LO","parentId":"u_parent1","userId":"u_student1","turno":"Manhã","matricula":"2025001","nascimento":"12/03/2011"}
+{"_id":"s2","name":"Sofia Costa","age":13,"grade":"8º Ano B","photo":"SC","parentId":"u_parent2","userId":"u_student2","turno":"Tarde","matricula":"2025002","nascimento":"05/07/2012"}
+{"_id":"s3","name":"Pedro Mendes","age":15,"grade":"9º Ano A","photo":"PM","parentId":null,"userId":null,"turno":"Manhã","matricula":"2025003","nascimento":"22/11/2010"}
+{"_id":"s4","name":"Julia Ferreira","age":13,"grade":"8º Ano B","photo":"JF","parentId":null,"userId":null,"turno":"Tarde","matricula":"2025004","nascimento":"18/04/2012"}

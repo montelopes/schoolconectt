@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchoolConnect — Plataforma Educacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Cabinet+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:    #060B1A;
+  --blue:   #1846F5;
+  --cyan:   #00D4C8;
+  --amber:  #FFB300;
+  --white:  #FFFFFF;
+  --g1:     #E8ECF8;
+  --g3:     #B0BAD4;
+  --g6:     #4A536B;
+  --g9:     #111827;
+  --red:    #F03D3D;
+  --green:  #00C278;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+/* ════════════════════════════════
+   LEFT — VISUAL STAGE
+════════════════════════════════ */
+.stage {
+  flex: 0 0 56%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px 60px;
+  overflow: hidden;
+}
+
+/* Deep space background */
+.stage-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 110% 80% at -10% 30%, #0A1E6E 0%, transparent 55%),
+    radial-gradient(ellipse 80% 100% at 110% 70%, #003D38 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 50% 10%,  #1C0A4A 0%, transparent 50%);
+  background-color: #050B1C;
+}
+
+/* Noise grain */
+.stage-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Animated gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.o1 { width: 500px; height: 500px; background: radial-gradient(circle, #1846F5 0%, transparent 70%); top: -180px; right: -120px; opacity: 0.18; animation: pulse1 12s ease-in-out infinite; }
+.o2 { width: 400px; height: 400px; background: radial-gradient(circle, #00D4C8 0%, transparent 70%); bottom: -150px; left: -80px;  opacity: 0.14; animation: pulse2 16s ease-in-out infinite; }
+.o3 { width: 280px; height: 280px; background: radial-gradient(circle, #FFB300 0%, transparent 70%); top: 40%; left: 30%;        opacity: 0.10; animation: pulse3 10s ease-in-out infinite; }
+
+@keyframes pulse1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-40px,30px) scale(1.1)} }
+@keyframes pulse2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,-40px) scale(1.15)} }
+@keyframes pulse3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-20px,20px) scale(0.9)} }
+
+/* Canvas for particles */
+#canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Diagonal accent line */
+.diag {
+  position: absolute;
+  top: 0; right: 140px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent);
+  transform: rotate(8deg) scaleY(1.2);
+  transform-origin: top center;
+}
+
+.stage-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Logo */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: revealUp 0.8s ease-out 0.1s forwards;
+}
+
+.brand-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--white) 0%, #D8E0FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 12px 40px rgba(24,70,245,0.5);
+  animation: iconFloat 4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes iconFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-8px) rotate(-3deg); }
+}
+
+.brand-name {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+
+.brand-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Headline */
+.hero {
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: revealUp 0.8s ease-out 0.25s forwards;
+}
+
+.hero h1 {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: clamp(36px, 3.4vw, 54px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+
+.hero h1 .line-gold {
+  display: block;
+  background: linear-gradient(90deg, var(--amber), #FFD966);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h1 .line-cyan {
+  display: block;
+  background: linear-gradient(90deg, var(--cyan), #80EDE7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  max-width: 400px;
+  font-weight: 400;
+}
+
+/* Feature cards */
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  opacity: 0;
+  animation: revealUp 0.8s ease-out 0.45s forwards;
+}
+
+.feat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 18px 20px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.feat:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.16);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.feat-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.feat-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.feat-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Glow line at bottom */
+.glow-line {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent);
+  opacity: 0.5;
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════
+   RIGHT — LOGIN FORM
+════════════════════════════════ */
+.panel {
+  flex: 0 0 44%;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 44px 52px;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* Top gradient bar */
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--amber));
+}
+
+/* Subtle corner glow */
+.panel::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(24,70,245,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.form-wrap {
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
+  animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Form header */
+.fhead { margin-bottom: 32px; }
+
+.fhead-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.fhead h2 {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--g9);
+  letter-spacing: -0.8px;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.fhead p { font-size: 14px; color: var(--g3); font-weight: 400; }
+
+/* Role selector */
+.role-selector {
+  margin-bottom: 26px;
+}
+
+.role-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--g6);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.role-btn {
+  background: #F8F9FC;
+  border: 1.5px solid var(--g1);
+  border-radius: 12px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.role-btn:hover {
+  border-color: var(--blue);
+  background: #EEF2FF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(24,70,245,0.12);
+}
+
+.role-btn.active {
+  border-color: var(--blue);
+  background: #EEF2FF;
+  box-shadow: 0 0 0 3px rgba(24,70,245,0.15);
+}
+
+.role-btn .r-icon { font-size: 20px; line-height: 1; }
+.role-btn .r-name { font-size: 10px; font-weight: 700; color: var(--g6); }
+.role-btn.active .r-name { color: var(--blue); }
+
+/* Fields */
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--g6);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.field input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--g1);
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: 'Sora', sans-serif;
+  color: var(--g9);
+  background: #FAFBFF;
+  outline: none;
+  transition: all 0.25s;
+  font-weight: 500;
+}
+
+.field input::placeholder { color: var(--g3); font-weight: 400; }
+
+.field input:focus {
+  border-color: var(--blue);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(24,70,245,0.1);
+}
+
+/* Error */
+.err-box {
+  background: #FFF3F3;
+  border: 1.5px solid #FFCDD2;
+  color: var(--red);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: none;
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  60%      { transform: translateX(6px); }
+}
+
+.err-box.show { display: block; }
+
+/* Submit */
+.btn-go {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #1846F5 0%, #0D35CC 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(24,70,245,0.38);
+  transition: all 0.25s;
+  letter-spacing: 0.2px;
+}
+
+.btn-go::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.btn-go::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  transition: left 0.55s ease;
+}
+
+.btn-go:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(24,70,245,0.48); }
+.btn-go:hover::after { left: 100%; }
+.btn-go:active { transform: translateY(0); }
+.btn-go.loading { pointer-events: none; opacity: 0.7; }
+
+/* SSL badge */
+.trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--g3);
+}
+
+.trust-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 960px) {
+  body { flex-direction: column; overflow-y: auto; }
+  .stage { flex: none; padding: 36px 28px 40px; }
+  .panel { flex: none; padding: 36px 28px; overflow-y: visible; }
+  .features { grid-template-columns: 1fr 1fr; }
+  #canvas { display: none; }
+}
+
+@media (max-width: 480px) {
+  .role-grid { grid-template-columns: repeat(2, 1fr); }
+  .features { display: none; }
+  .hero h1 { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ STAGE (LEFT) ═══ -->
+<div class="stage">
+  <div class="stage-bg"></div>
+  <canvas id="canvas"></canvas>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="diag"></div>
+  <div class="glow-line"></div>
+
+  <div class="stage-content">
+    <div class="brand">
+      <div class="brand-mark">🎓</div>
+      <div>
+        <div class="brand-name">SchoolConnect</div>
+        <div class="brand-tag">Plataforma Educacional</div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1>
+        <span class="line-gold">Escola e família</span>
+        <span class="line-cyan">sempre conectadas.</span>
+      </h1>
+      <p>Gestão escolar completa em tempo real — comunicação, desempenho e rotina num único lugar.</p>
+    </div>
+
+    <div class="features">
+      <div class="feat">
+        <span class="feat-icon">📍</span>
+        <div class="feat-title">Check-in em Tempo Real</div>
+        <div class="feat-desc">Entrada e saída notificadas ao instante</div>
+      </div>
+      <div class="feat">
+        <span class="feat-icon">📊</span>
+        <div class="feat-title">Notas & Boletim Digital</div>
+        <div class="feat-desc">Desempenho acadêmico sempre atualizado</div>
+      </div>
+      <div class="feat">
+        <span class="feat-icon">💬</span>
+        <div class="feat-title">Comunicados Diretos</div>
+        <div class="feat-desc">Escola e família em contato direto</div>
+      </div>
+      <div class="feat">
+        <span class="feat-icon">📅</span>
+        <div class="feat-title">Calendário Escolar</div>
+        <div class="feat-desc">Eventos, provas e atividades organizados</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PANEL (RIGHT) ═══ -->
+<div class="panel">
+  <div class="form-wrap">
+    <div class="fhead">
+      <div class="fhead-eyebrow">✦ Acesso seguro</div>
+      <h2>Bem-vindo de volta</h2>
+      <p>Entre na sua conta para continuar</p>
+    </div>
+
+    <div class="role-selector">
+      <span class="role-label">Qual é o seu perfil?</span>
+      <div class="role-grid">
+        <button class="role-btn" onclick="selectRole(this, 'admin@school.com', 'admin123')">
+          <span class="r-icon">👑</span>
+          <span class="r-name">Admin</span>
+        </button>
+        <button class="role-btn" onclick="selectRole(this, 'carlos@school.com', 'prof123')">
+          <span class="r-icon">👨‍🏫</span>
+          <span class="r-name">Professor</span>
+        </button>
+        <button class="role-btn" onclick="selectRole(this, 'maria@email.com', 'pai123')">
+          <span class="r-icon">👨‍👩‍👧</span>
+          <span class="r-name">Responsável</span>
+        </button>
+        <button class="role-btn" onclick="selectRole(this, 'lucas@school.com', 'aluno123')">
+          <span class="r-icon">🎒</span>
+          <span class="r-name">Aluno</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="err-box" id="errMsg">Email ou senha inválidos</div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="seu@email.com" autocomplete="email">
+    </div>
+
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn-go" id="btnLogin" onclick="doLogin()">
+      Entrar na plataforma →
+    </button>
+
+    <div class="trust">
+      <div class="trust-dot"></div>
+      Conexão protegida · SSL 256-bit
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Particles ── */
+(function() {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    const stage = canvas.parentElement;
+    W = canvas.width  = stage.offsetWidth;
+    H = canvas.height = stage.offsetHeight;
+  }
+
+  function makeParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.4 - 0.1,
+      alpha: Math.random() * 0.6 + 0.1,
+      color: ['#1846F5','#00D4C8','#FFB300'][Math.floor(Math.random()*3)]
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: 80 }, makeParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.001;
+
+      if (p.y < -5 || p.alpha <= 0) {
+        Object.assign(p, makeParticle());
+        p.y = H + 5;
+        p.alpha = Math.random() * 0.6 + 0.1;
+      }
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  draw();
+})();
+
+/* ── Role selector ── */
+function selectRole(btn, email, pw) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('email').value = email;
+  document.getElementById('password').value = pw;
+  document.getElementById('errMsg').classList.remove('show');
+}
+
+/* ── Login ── */
+document.getElementById('password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+async function doLogin() {
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const btn      = document.getElementById('btnLogin');
+  const err      = document.getElementById('errMsg');
+
+  if (!email || !password) {
+    err.textContent = 'Preencha email e senha';
+    err.classList.add('show');
+    return;
+  }
+
+  btn.textContent = '⏳ Entrando...';
+  btn.classList.add('loading');
+  err.classList.remove('show');
+
+  try {
+    const res  = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      btn.textContent = '✓ Redirecionando...';
+      window.location.href = '/dashboard';
+    } else {
+      err.textContent = data.error || 'Email ou senha inválidos';
+      err.classList.add('show');
+      btn.textContent = 'Entrar na plataforma →';
+      btn.classList.remove('loading');
+    }
+  } catch {
+    err.textContent = 'Erro de conexão. Tente novamente.';
+    err.classList.add('show');
+    btn.textContent = 'Entrar na plataforma →';
+    btn.classList.remove('loading');
+  }
+}
+</script>
+</body>
+</html>

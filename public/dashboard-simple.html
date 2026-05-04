@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchoolConnect — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #08152E;
+  --blue: #1A56DB;
+  --teal: #0891B2;
+  --green: #059669;
+  --red: #DC2626;
+  --orange: #EA580C;
+  --gold: #F59E0B;
+  --slate: #64748B;
+  --light: #F8FAFC;
+}
+body { font-family: 'Sora', sans-serif; background: var(--light); color: var(--slate); }
+.container { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar { 
+  width: 260px; 
+  background: linear-gradient(180deg, var(--navy) 0%, #0a1929 100%);
+  color: white; 
+  padding: 20px; 
+  position: fixed; 
+  height: 100vh; 
+  overflow-y: auto; 
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 24px; margin-bottom: 30px; font-weight: 800; }
+.user-card { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+.user-name { font-size: 14px; font-weight: 600; }
+.user-role { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+.nav { display: flex; flex-direction: column; gap: 8px; }
+.nav-item { 
+  padding: 12px 14px; 
+  background: transparent;
+  border-radius: 8px; 
+  cursor: pointer; 
+  transition: all 0.2s;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-item:hover { background: rgba(255,255,255,0.1); }
+.nav-item.active { background: var(--blue); font-weight: 600; }
+.nav-section { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); margin-top: 15px; margin-bottom: 8px; padding: 0 14px; }
+.logout { position: absolute; bottom: 20px; left: 20px; width: calc(100% - 40px); padding: 10px; background: rgba(255,255,255,0.1); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.logout:hover { background: var(--red); }
+
+/* MAIN */
+.main { margin-left: 260px; flex: 1; }
+.topbar { 
+  background: white; 
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.topbar-left h2 { font-size: 22px; font-weight: 700; color: var(--navy); }
+.topbar-left p { font-size: 13px; color: var(--slate); margin-top: 3px; }
+.topbar-right { display: flex; gap: 15px; }
+.icon-btn { background: transparent; border: none; font-size: 20px; cursor: pointer; }
+.content { padding: 30px; }
+
+/* CARDS */
+.card { 
+  background: white; 
+  padding: 24px; 
+  border-radius: 12px; 
+  margin-bottom: 24px; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-top: 3px solid var(--blue);
+}
+.card-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+/* STATS GRID */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 24px; }
+.stat { 
+  background: white; 
+  padding: 20px; 
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--blue);
+}
+.stat-value { font-size: 28px; font-weight: 800; color: var(--blue); }
+.stat-label { font-size: 12px; color: var(--slate); margin-top: 5px; }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; }
+table th { 
+  background: var(--light);
+  padding: 12px; 
+  text-align: left; 
+  border-bottom: 2px solid #eee;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--navy);
+}
+table td { 
+  padding: 12px; 
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+table tr:hover { background: var(--light); }
+
+/* BUTTONS */
+.btn { 
+  padding: 10px 16px; 
+  background: var(--blue); 
+  color: white; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn:hover { background: #0d47a1; transform: translateY(-1px); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn-success { background: var(--green); }
+.btn-success:hover { background: #047857; }
+.btn-danger { background: var(--red); }
+.btn-danger:hover { background: #b91c1c; }
+.btn-outline { background: transparent; border: 1px solid var(--blue); color: var(--blue); }
+.btn-outline:hover { background: var(--light); }
+
+/* BADGES */
+.badge { 
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-blue { background: #dbeafe; color: var(--blue); }
+.badge-green { background: #dcfce7; color: var(--green); }
+.badge-red { background: #fee2e2; color: var(--red); }
+.badge-orange { background: #fed7aa; color: var(--orange); }
+
+/* ALERT */
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid;
+  font-size: 13px;
+}
+.alert-success { background: #dcfce7; border-color: var(--green); color: #065f46; }
+.alert-warning { background: #fef3c7; border-color: var(--gold); color: #78350f; }
+.alert-danger { background: #fee2e2; border-color: var(--red); color: #7f1d1d; }
+
+/* PROFILE */
+.profile-card {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.profile-avatar {
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.profile-info h3 { font-size: 18px; margin-bottom: 3px; }
+.profile-info p { font-size: 12px; opacity: 0.9; }
+
+/* MODAL */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+.modal.open { display: flex; }
+.modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+.modal-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.modal-close { float: right; font-size: 24px; cursor: pointer; color: var(--slate); }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar { width: 100%; height: auto; position: relative; padding: 15px; }
+  .main { margin-left: 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  table { font-size: 12px; }
+  table td, table th { padding: 8px; }
+}
+
+.error { background: #fee2e2; color: #7f1d1d; padding: 20px; border-radius: 8px; text-align: center; margin: 20px; }
+.loading { text-align: center; padding: 40px; color: var(--slate); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar">
+    <div class="logo">🎓 SchoolConnect</div>
+    <div class="user-card">
+      <div class="user-name" id="userName">Carregando...</div>
+      <div class="user-role" id="userRole"></div>
+    </div>
+    <div class="nav" id="nav"></div>
+    <button class="logout" onclick="logout()">🚪 Sair do Sistema</button>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h2 id="pageTitle">Dashboard</h2>
+        <p id="pageSub"></p>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" onclick="alert('Notificações')">🔔</button>
+        <button class="icon-btn" onclick="alert('Configurações')">⚙️</button>
+      </div>
+    </div>
+    <div class="content" id="content">
+      <div class="loading">⏳ Carregando...</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+let USER = null;
+let STUDENT = null;
+let CURRENT_PAGE = 'overview';
+
+const roleLabels = { admin: '👑 Administrador', teacher: '👨‍🏫 Professor', parent: '👨‍👩‍👧 Responsável', student: '🎒 Aluno' };
+
+// API
+async function api(url, method='GET', body=null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' }, credentials: 'include' };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(url, opts);
+  if (r.status === 401 || r.status === 403) { window.location.href = '/login'; return; }
+  const json = await r.json();
+  if (json.error) throw new Error(json.error);
+  return json;
+}
+
+// INIT
+async function init() {
+  try {
+    USER = await api('/api/me');
+    document.getElementById('userName').textContent = USER.name;
+    document.getElementById('userRole').textContent = roleLabels[USER.role] || USER.role;
+    renderNav();
+    try {
+      await loadStudent();
+    } catch (e) {
+      STUDENT = null;
+    }
+    goTo('overview');
+  } catch (e) {
+    document.getElementById('content').innerHTML = `<div class="error">❌ ${e.message}</div>`;
+  }
+}
+
+// RENDER NAV
+function renderNav() {
+  const navs = [
+    { id: 'overview', label: '🏠 Visão Geral' },
+    { id: 'notas', label: '📊 Notas' },
+    { id: 'presenca', label: '📅 Presença' },
+    { id: 'tarefas', label: '📚 Tarefas' },
+    { id: 'calendario', label: '🗓️ Calendário' },
+    { id: 'esportes', label: '🏆 Esportes' },
+    { id: 'mensagens', label: '💬 Mensagens' },
+  ];
+  
+  if (USER.role === 'teacher' || USER.role === 'admin') {
+    navs.push({ section: 'GESTÃO' });
+    navs.push({ id: 'alunos', label: '👥 Alunos' });
+    navs.push({ id: 'lancar', label: '✏️ Lançar Notas' });
+    navs.push({ id: 'chamada', label: '✅ Chamada' });
+  }
+  
+  if (USER.role === 'admin') {
+    navs.push({ section: 'ADMIN' });
+    navs.push({ id: 'adm', label: '⚙️ Administração' });
+  }
+
+  const nav = document.getElementById('nav');
+  nav.innerHTML = navs.map(n => {
+    if (n.section) return `<div class="nav-section">${n.section}</div>`;
+    return `<div class="nav-item" id="nav-${n.id}" onclick="goTo('${n.id}')">${n.label}</div>`;
+  }).join('');
+}
+
+// LOAD STUDENT
+async function loadStudent() {
+  let sid = null;
+  if (USER.role === 'student') sid = USER.studentId;
+  else if (USER.role === 'parent') sid = USER.studentIds?.[0];
+  if (sid) {
+    try {
+      STUDENT = await api(`/api/student/${sid}`);
+    } catch (e) {
+      STUDENT = null;
+    }
+  }
+}
+
+// GO TO
+async function goTo(page) {
+  CURRENT_PAGE = page;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navEl = document.getElementById(`nav-${page}`);
+  if (navEl) navEl.classList.add('active');
+
+  const titles = {
+    overview: ['Visão Geral', 'Painel principal'],
+    notas: ['📊 Notas', 'Seu boletim e desempenho'],
+    presenca: ['📅 Presença', 'Frequência e comparecimento'],
+    tarefas: ['📚 Tarefas', 'Suas pendências'],
+    calendario: ['🗓️ Calendário', 'Eventos e datas importantes'],
+    esportes: ['🏆 Esportes', 'Atividades esportivas'],
+    mensagens: ['💬 Mensagens', 'Sua caixa de entrada'],
+    alunos: ['👥 Alunos', 'Lista de alunos'],
+    lancar: ['✏️ Lançar Notas', 'Registrar notas dos alunos'],
+    chamada: ['✅ Chamada', 'Registrar presença'],
+    adm: ['⚙️ Admin', 'Painel de administração'],
+  };
+
+  const [title, sub] = titles[page] || ['Página', ''];
+  document.getElementById('pageTitle').textContent = title;
+  document.getElementById('pageSub').textContent = sub;
+  document.getElementById('content').innerHTML = '<div class="loading">⏳ Carregando...</div>';
+
+  try {
+    const html = await buildPage(page);
+    document.getElementById('content').innerHTML = html;
+  } catch (e) {
+    console.error('Erro:', e);
+    document.getElementById('content').innerHTML = `<div class="error">❌ Erro: ${e.message}</div>`;
+  }
+}
+
+// BUILD PAGE
+async function buildPage(page) {
+  switch (page) {
+    case 'overview': return await buildOverview();
+    case 'notas': return await buildNotas();
+    case 'presenca': return await buildPresenca();
+    case 'tarefas': return await buildTarefas();
+    case 'calendario': return await buildCalendario();
+    case 'esportes': return await buildEsportes();
+    case 'mensagens': return await buildMensagens();
+    case 'alunos': return await buildAlunos();
+    case 'lancar': return await buildLancarNotas();
+    case 'chamada': return await buildChamada();
+    case 'adm': return await buildAdm();
+    default: return '<p>Página não encontrada</p>';
+  }
+}
+
+// BUILD OVERVIEW
+async function buildOverview() {
+  if (!STUDENT) {
+    const students = await api('/api/students');
+    let html = `
+      <div class="alert alert-success">
+        👋 Bem-vindo ao SchoolConnect! Você é um ${roleLabels[USER.role].toLowerCase()}.
+      </div>
+      <div class="card">
+        <div class="card-title">👥 Seus Alunos</div>
+        <p>Total: <strong>${students.length}</strong> alunos cadastrados</p>
+      </div>
+    `;
+    return html;
+  }
+  
+  const grades = await api(`/api/grades/${STUDENT._id}`);
+  const att = await api(`/api/attendance/${STUDENT._id}`);
+  const tasks = await api(`/api/tasks/${STUDENT._id}`);
+  
+  const media = grades.filter(g => g.media).length ? 
+    (grades.filter(g => g.media).reduce((a,g) => a + (g.media || 0), 0) / grades.filter(g => g.media).length).toFixed(1) : '—';
+  
+  return `
+    <div class="profile-card">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-info">
+        <h3>${STUDENT.name}</h3>
+        <p>${STUDENT.grade} • ${STUDENT.turno}</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-value" style="color: var(--blue)">${media}</div>
+        <div class="stat-label">Média Geral</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--green)">${att.stats.percentual}%</div>
+        <div class="stat-label">Frequência</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--orange)">${grades.length}</div>
+        <div class="stat-label">Disciplinas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--red)">${tasks.filter(t => !t.completion?.done).length}</div>
+        <div class="stat-label">Pendências</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-title">📋 Últimas Notas</div>
+      <table>
+        <thead><tr><th>Disciplina</th><th>Média</th><th>Status</th></tr></thead>
+        <tbody>
+          ${grades.slice(0, 5).map(g => `
+            <tr>
+              <td>${g.subject}</td>
+              <td><strong>${g.media || '—'}</strong></td>
+              <td><span class="badge ${g.status === 'aprovado' ? 'badge-green' : g.status === 'reprovado' ? 'badge-red' : 'badge-orange'}">${g.status}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD NOTAS
+async function buildNotas() {
+  if (!STUDENT) return '<div class="alert alert-warning">⚠️ Selecione um aluno primeiro</div>';
+  const grades = await api(`/api/grades/${STUDENT._id}`);
+  
+  const media = grades.filter(g => g.media).length ? 
+    (grades.filter(g => g.media).reduce((a,g) => a + (g.media || 0), 0) / grades.filter(g => g.media).length).toFixed(1) : '—';
+  
+  return `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-value">${media}</div>
+        <div class="stat-label">Média Geral</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">${grades.filter(g => g.status === 'aprovado').length}</div>
+        <div class="stat-label">Aprovado</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">${grades.filter(g => g.status === 'recuperação').length}</div>
+        <div class="stat-label">Recuperação</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">${grades.filter(g => g.status === 'reprovado').length}</div>
+        <div class="stat-label">Reprovado</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Boletim Completo</div>
+      <table>
+        <thead><tr><th>Disciplina</th><th>1º Bim</th><th>2º Bim</th><th>3º Bim</th><th>4º Bim</th><th>Média</th><th>Status</th></tr></thead>
+        <tbody>
+          ${grades.map(g => `
+            <tr>
+              <td>${g.subject}</td>
+              <td>${g.bimestre1 || '—'}</td>
+              <td>${g.bimestre2 || '—'}</td>
+              <td>${g.bimestre3 || '—'}</td>
+              <td>${g.bimestre4 || '—'}</td>
+              <td><strong>${g.media || '—'}</strong></td>
+              <td><span class="badge ${g.status === 'aprovado' ? 'badge-green' : g.status === 'reprovado' ? 'badge-red' : 'badge-orange'}">${g.status}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD PRESENCA
+async function buildPresenca() {
+  if (!STUDENT) return '<div class="alert alert-warning">⚠️ Selecione um aluno primeiro</div>';
+  const att = await api(`/api/attendance/${STUDENT._id}`);
+  
+  return `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-value" style="color: var(--green)">${att.stats.percentual}%</div>
+        <div class="stat-label">Frequência</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--green)">${att.stats.presentes}</div>
+        <div class="stat-label">Presenças</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--red)">${att.stats.faltas}</div>
+        <div class="stat-label">Faltas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--orange)">${att.stats.atrasos}</div>
+        <div class="stat-label">Atrasos</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 Últimos Registros</div>
+      <table>
+        <thead><tr><th>Data</th><th>Status</th><th>Entrada</th><th>Saída</th></tr></thead>
+        <tbody>
+          ${att.records.slice(0, 10).map(r => `
+            <tr>
+              <td>${r.date}</td>
+              <td><span class="badge ${r.status === 'presente' ? 'badge-green' : r.status === 'falta' ? 'badge-red' : 'badge-orange'}">${r.status}</span></td>
+              <td>${r.horarioEntrada || '—'}</td>
+              <td>${r.horarioSaida || '—'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD TAREFAS
+async function buildTarefas() {
+  if (!STUDENT) return '<div class="alert alert-warning">⚠️ Selecione um aluno primeiro</div>';
+  const tasks = await api(`/api/tasks/${STUDENT._id}`);
+  
+  const done = tasks.filter(t => t.completion?.done).length;
+  const pending = tasks.filter(t => !t.completion?.done).length;
+  
+  return `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-value">${tasks.length}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--green)">${done}</div>
+        <div class="stat-label">Concluídas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: var(--red)">${pending}</div>
+        <div class="stat-label">Pendentes</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📚 Tarefas</div>
+      <table>
+        <thead><tr><th>Tarefa</th><th>Disciplina</th><th>Vencimento</th><th>Status</th></tr></thead>
+        <tbody>
+          ${tasks.map(t => `
+            <tr>
+              <td><strong>${t.title}</strong></td>
+              <td>${t.subject}</td>
+              <td>${t.dueDate}</td>
+              <td><span class="badge ${t.completion?.done ? 'badge-green' : 'badge-orange'}">${t.completion?.done ? '✓ Entregue' : '⏳ Pendente'}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD CALENDARIO
+async function buildCalendario() {
+  const events = await api('/api/events');
+  return `
+    <div class="card">
+      <div class="card-title">🗓️ Eventos</div>
+      <table>
+        <thead><tr><th>Evento</th><th>Data</th><th>Tipo</th><th>Turma</th></tr></thead>
+        <tbody>
+          ${events.map(e => `
+            <tr>
+              <td><strong>${e.title}</strong></td>
+              <td>${e.date}</td>
+              <td><span class="badge badge-blue">${e.type}</span></td>
+              <td>${e.grade}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD ESPORTES
+async function buildEsportes() {
+  const sports = await api('/api/sports');
+  return `
+    <div class="card">
+      <div class="card-title">🏆 Modalidades Esportivas</div>
+      <table>
+        <thead><tr><th>Nome</th><th>Modalidade</th><th>Próx Jogo</th><th>Opponent</th></tr></thead>
+        <tbody>
+          ${sports.map(s => `
+            <tr>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.modality}</td>
+              <td>${s.nextGame || '—'}</td>
+              <td>${s.opponent || '—'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD MENSAGENS
+async function buildMensagens() {
+  const msgs = await api('/api/messages');
+  return `
+    <div class="card">
+      <div class="card-title">💬 Mensagens <button class="btn btn-sm" onclick="openNewMessage()" style="float:right">Enviar</button></div>
+      <table>
+        <thead><tr><th>De</th><th>Assunto</th><th>Data</th><th>Ações</th></tr></thead>
+        <tbody>
+          ${msgs.slice(0, 10).map(m => `
+            <tr>
+              <td>${m.fromName}</td>
+              <td>${m.subject}</td>
+              <td>${m.date}</td>
+              <td><button class="btn btn-sm btn-outline" onclick="openMessage('${m._id}', '${m.subject}')">Ler</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD ALUNOS
+async function buildAlunos() {
+  const students = await api('/api/students');
+  const selected = STUDENT ? `<div class="alert alert-success">✅ Aluno selecionado: <strong>${STUDENT.name}</strong> - ${STUDENT.grade}</div>` : '';
+  return `
+    ${selected}
+    <div class="card">
+      <div class="card-title">👥 Alunos</div>
+      <table>
+        <thead><tr><th>Nome</th><th>Turma</th><th>Turno</th><th>Matrícula</th><th>Ações</th></tr></thead>
+        <tbody>
+          ${students.map(s => `
+            <tr style="background:${STUDENT && STUDENT._id === s._id ? '#dbeafe' : ''}">
+              <td><strong>${s.name}</strong></td>
+              <td>${s.grade}</td>
+              <td>${s.turno}</td>
+              <td>${s.matricula}</td>
+              <td><button class="btn btn-sm ${STUDENT && STUDENT._id === s._id ? 'btn-success' : 'btn-outline'}" onclick="selectStudent('${s._id}')">
+                ${STUDENT && STUDENT._id === s._id ? '✓ Selecionado' : 'Selecionar'}</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// BUILD LANCAR NOTAS
+async function buildLancarNotas() {
+  const students = await api('/api/students');
+  
+  if (students.length === 0) {
+    return '<div class="alert alert-warning">⚠️ Nenhum aluno disponível</div>';
+  }
+  
+  let html = `
+    <div class="alert alert-success">📝 Clique em "Salvar" para registrar a nota. A média será calculada automaticamente.</div>
+    <div class="card">
+      <div class="card-title">✏️ Lançar Notas</div>
+      <table style="font-size: 13px;">
+        <thead>
+          <tr>
+            <th>Aluno</th>
+            <th>Disciplina</th>
+            <th>1º Bim</th>
+            <th>2º Bim</th>
+            <th>3º Bim</th>
+            <th>4º Bim</th>
+            <th>Média</th>
+            <th>Status</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="notasTable">
+  `;
+  
+  for (const s of students) {
+    const grades = await api(`/api/grades/${s._id}`);
+    
+    for (const g of grades) {
+      const b1 = parseFloat(g.bimestre1) || 0;
+      const b2 = parseFloat(g.bimestre2) || 0;
+      const b3 = parseFloat(g.bimestre3) || 0;
+      const b4 = parseFloat(g.bimestre4) || 0;
+      
+      const notasPreenchidas = [b1, b2, b3, b4].filter(n => n > 0).length;
+      const media = notasPreenchidas > 0 ? ((b1 + b2 + b3 + b4) / notasPreenchidas).toFixed(1) : '—';
+      const statusBadge = media === '—' ? 'badge-orange' : media >= 7 ? 'badge-green' : media >= 5 ? 'badge-orange' : 'badge-red';
+      const statusLabel = media === '—' ? 'Incompleto' : media >= 7 ? 'Aprovado' : media >= 5 ? 'Recuperação' : 'Reprovado';
+      
+      html += `
+        <tr id="grade-${g._id}">
+          <td><strong>${s.name}</strong></td>
+          <td>${g.subject}</td>
+          <td><input type="number" min="0" max="10" step="0.1" value="${b1 > 0 ? b1 : ''}" data-grade-id="${g._id}" data-field="bimestre1" class="input-nota" style="width:50px;padding:6px;border:1px solid #ddd;border-radius:4px;font-weight:bold;text-align:center;"></td>
+          <td><input type="number" min="0" max="10" step="0.1" value="${b2 > 0 ? b2 : ''}" data-grade-id="${g._id}" data-field="bimestre2" class="input-nota" style="width:50px;padding:6px;border:1px solid #ddd;border-radius:4px;font-weight:bold;text-align:center;"></td>
+          <td><input type="number" min="0" max="10" step="0.1" value="${b3 > 0 ? b3 : ''}" data-grade-id="${g._id}" data-field="bimestre3" class="input-nota" style="width:50px;padding:6px;border:1px solid #ddd;border-radius:4px;font-weight:bold;text-align:center;"></td>
+          <td><input type="number" min="0" max="10" step="0.1" value="${b4 > 0 ? b4 : ''}" data-grade-id="${g._id}" data-field="bimestre4" class="input-nota" style="width:50px;padding:6px;border:1px solid #ddd;border-radius:4px;font-weight:bold;text-align:center;"></td>
+          <td><strong id="media-${g._id}" style="color:${media >= 7 ? 'green' : media >= 5 ? 'orange' : 'red'}">${media}</strong></td>
+          <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
+          <td><button class="btn btn-sm btn-success" onclick="saveGradeRow('${g._id}', '${s._id}')">💾</button></td>
+        </tr>
+      `;
+    }
+  }
+  
+  html += `
+        </tbody>
+      </table>
+    </div>
+    <script>
+      document.querySelectorAll('.input-nota').forEach(input => {
+        input.addEventListener('change', function() {
+          calcularMediaLinha(this.dataset.gradeId);
+        });
+        input.addEventListener('keyup', function() {
+          calcularMediaLinha(this.dataset.gradeId);
+        });
+      });
+      
+      function calcularMediaLinha(gradeId) {
+        const b1 = parseFloat(document.querySelector('input[data-grade-id="${gradeId}"][data-field="bimestre1"]').value) || 0;
+        const b2 = parseFloat(document.querySelector('input[data-grade-id="${gradeId}"][data-field="bimestre2"]').value) || 0;
+        const b3 = parseFloat(document.querySelector('input[data-grade-id="${gradeId}"][data-field="bimestre3"]').value) || 0;
+        const b4 = parseFloat(document.querySelector('input[data-grade-id="${gradeId}"][data-field="bimestre4"]').value) || 0;
+        
+        const notasPreenchidas = [b1, b2, b3, b4].filter(n => n > 0).length;
+        const media = notasPreenchidas > 0 ? ((b1 + b2 + b3 + b4) / notasPreenchidas).toFixed(1) : '—';
+        
+        const mediaEl = document.getElementById('media-' + gradeId);
+        mediaEl.textContent = media;
+        
+        if (media !== '—') {
+          if (media >= 7) {
+            mediaEl.style.color = 'green';
+          } else if (media >= 5) {
+            mediaEl.style.color = 'orange';
+          } else {
+            mediaEl.style.color = 'red';
+          }
+        }
+      }
+    </script>
+  `;
+  
+  return html;
+}
+
+// SAVE GRADE ROW
+async function saveGradeRow(gradeId, studentId) {
+  const b1 = parseFloat(document.querySelector(\`input[data-grade-id="\${gradeId}"][data-field="bimestre1"]\`).value) || null;
+  const b2 = parseFloat(document.querySelector(\`input[data-grade-id="\${gradeId}"][data-field="bimestre2"]\`).value) || null;
+  const b3 = parseFloat(document.querySelector(\`input[data-grade-id="\${gradeId}"][data-field="bimestre3"]\`).value) || null;
+  const b4 = parseFloat(document.querySelector(\`input[data-grade-id="\${gradeId}"][data-field="bimestre4"]\`).value) || null;
+  
+  const notas = [b1, b2, b3, b4].filter(n => n !== null);
+  if (notas.length === 0) {
+    alert('⚠️ Preenchimestamp pelo menos uma nota antes de salvar');
+    return;
+  }
+  
+  try {
+    await api(\`/api/grades/\${gradeId}\`, 'PUT', {
+      bimestre1: b1,
+      bimestre2: b2,
+      bimestre3: b3,
+      bimestre4: b4,
+      media: (b1 + b2 + b3 + b4) / 4
+    });
+    
+    const mediaEl = document.getElementById(\`media-\${gradeId}\`);
+    const row = document.getElementById(\`grade-\${gradeId}\`);
+    row.style.background = '#dcfce7';
+    setTimeout(() => { row.style.background = ''; }, 1500);
+    
+    alert('✅ Nota salva com sucesso!');
+  } catch (e) {
+    alert('❌ Erro ao salvar: ' + e.message);
+  }
+}
+
+// BUILD CHAMADA
+async function buildChamada() {
+  const students = await api('/api/students');
+  let html = `
+    <div class="alert alert-success">Data: <strong>${new Date().toLocaleDateString('pt-BR')}</strong></div>
+    <div class="card"><div class="card-title">✅ Fazer Chamada</div>
+    <table><thead><tr><th>Aluno</th><th>Status</th><th>Entrada</th><th>Saída</th></tr></thead><tbody>
+  `;
+  
+  for (const s of students) {
+    html += `
+      <tr>
+        <td>${s.name}</td>
+        <td><select style="padding:5px;border:1px solid #ddd;border-radius:4px;"><option>Presente</option><option>Falta</option><option>Atrasado</option></select></td>
+        <td><input type="time" value="07:30" style="padding:5px;border:1px solid #ddd;border-radius:4px;"></td>
+        <td><input type="time" value="12:30" style="padding:5px;border:1px solid #ddd;border-radius:4px;"></td>
+      </tr>
+    `;
+  }
+  html += '</tbody></table><button class="btn" style="margin-top:20px;width:100%;padding:12px;">💾 Salvar Chamada</button></div>';
+  return html;
+}
+
+// BUILD ADM
+async function buildAdm() {
+  const users = await api('/api/users');
+  const students = await api('/api/students');
+  return `
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-value">${users.length}</div>
+        <div class="stat-label">Usuários</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">${students.length}</div>
+        <div class="stat-label">Alunos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">${users.filter(u => u.role === 'teacher').length}</div>
+        <div class="stat-label">Professores</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚙️ Usuários do Sistema</div>
+      <table>
+        <thead><tr><th>Nome</th><th>Email</th><th>Função</th><th>Ações</th></tr></thead>
+        <tbody>
+          ${users.slice(0, 10).map(u => `
+            <tr>
+              <td>${u.name}</td>
+              <td>${u.email}</td>
+              <td><span class="badge badge-blue">${roleLabels[u.role]}</span></td>
+              <td><button class="btn btn-sm btn-outline">Editar</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// HELPERS
+async function selectStudent(sid) {
+  try {
+    STUDENT = await api(`/api/student/${sid}`);
+    goTo(CURRENT_PAGE);
+  } catch (e) {
+    alert('Erro ao selecionar aluno: ' + e.message);
+  }
+}
+
+function openMessage(id, subject) {
+  openModal(subject, 'Conteúdo da mensagem...');
+}
+
+function openNewMessage() {
+  openModal('✉️ Nova Mensagem', `
+    <div class="form-group">
+      <label>Para:</label>
+      <input type="email" placeholder="Email do destinatário">
+    </div>
+    <div class="form-group">
+      <label>Assunto:</label>
+      <input type="text" placeholder="Assunto da mensagem">
+    </div>
+    <div class="form-group">
+      <label>Mensagem:</label>
+      <textarea rows="5" placeholder="Escreva sua mensagem..."></textarea>
+    </div>
+    <button class="btn" style="width:100%;padding:10px;">Enviar</button>
+  `);
+}
+
+function openModal(title, body) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = body;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+// LOGOUT
+async function logout() {
+  await api('/api/logout', 'POST');
+  window.location.href = '/login';
+}
+
+// START
+init();
+</script>
+</body>
+</html>

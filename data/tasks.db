@@ -1,0 +1,14 @@
+{"_type":"completion","taskId":"t6","studentId":"s1","done":true,"grade":9,"submittedAt":"2026-04-14","_id":"9FxzFyjIcNpnVyEN"}
+{"_type":"completion","taskId":"t4","studentId":"s2","done":true,"grade":null,"submittedAt":"2026-04-15T12:56:51.132Z","_id":"DPrIvkHQUmCQadH7"}
+{"_type":"completion","taskId":"t5","studentId":"s2","done":false,"grade":null,"submittedAt":null,"_id":"Fm9oGqBnyPbxV2yA"}
+{"_type":"completion","taskId":"t3","studentId":"s1","done":true,"submittedAt":"2026-04-15T13:32:10.103Z","grade":null,"_id":"FmzRxN2ZPMkAnDhi"}
+{"_type":"completion","taskId":"t6","studentId":"s2","done":false,"grade":null,"submittedAt":null,"_id":"U2CqwHo2FeCtk9wK"}
+{"_type":"completion","taskId":"t7","studentId":"s1","done":true,"grade":8.5,"submittedAt":"2026-04-12","_id":"nLeMhnhx2oNEhWCq"}
+{"_type":"completion","taskId":"t7","studentId":"s2","done":true,"grade":7.5,"submittedAt":"2026-04-11","_id":"rmxC47BcbfYLOOeB"}
+{"_id":"t1","title":"Exercícios de Álgebra","subject":"Matemática","description":"Resolver os exercícios 1 ao 20 da página 87 do livro.","dueDate":"2026-04-18","teacher":"u_prof1","grade":"9º Ano A","points":10}
+{"_id":"t2","title":"Redação: Meio Ambiente","subject":"Português","description":"Produção textual dissertativa-argumentativa com mínimo 30 linhas.","dueDate":"2026-04-22","teacher":"u_prof2","grade":"9º Ano A","points":10}
+{"_id":"t3","title":"Mapa da América do Sul","subject":"Geografia","description":"Montar e identificar todos os países com capitais no mapa mudo.","dueDate":"2026-04-20","teacher":"u_prof3","grade":"9º Ano A","points":8}
+{"_id":"t4","title":"Equações do 2º Grau","subject":"Matemática","description":"Lista de equações do caderno de exercícios, pág 45-47.","dueDate":"2026-04-17","teacher":"u_prof1","grade":"8º Ano B","points":10}
+{"_id":"t5","title":"Análise Sintática","subject":"Português","description":"Identificar sujeito e predicado nos textos fornecidos.","dueDate":"2026-04-19","teacher":"u_prof2","grade":"8º Ano B","points":8}
+{"_id":"t6","title":"Pesquisa: Segunda Guerra","subject":"História","description":"Pesquisar causas e consequências com no mínimo 3 fontes.","dueDate":"2026-04-13","teacher":"u_prof3","grade":"9º Ano A","points":10}
+{"_id":"t7","title":"Lei de Newton","subject":"Física","description":"Resolver 15 problemas aplicando as 3 leis de Newton.","dueDate":"2026-04-10","teacher":"u_prof1","grade":"9º Ano A","points":10}

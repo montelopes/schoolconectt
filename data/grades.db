@@ -1,0 +1,40 @@
+{"studentId":"s1","subject":"História","bimestre1":10,"bimestre2":10,"bimestre3":10,"bimestre4":10,"teacher":"Prof. Roberto Silva","_id":"14eG5PMg3PW8kfgj"}
+{"studentId":"s2","subject":"Química","bimestre1":6.3,"bimestre2":9.4,"bimestre3":9.1,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"1OAp0guUVjgySSaW"}
+{"studentId":"s2","subject":"Física","bimestre1":9,"bimestre2":8.3,"bimestre3":10,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"5gyuuDaieTp9G0G8"}
+{"studentId":"s2","subject":"Educação Física","bimestre1":7.9,"bimestre2":6.5,"bimestre3":7.5,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"6CEfx60KsihjemVY"}
+{"studentId":"s3","subject":"Física","bimestre1":7.6,"bimestre2":6.9,"bimestre3":6.4,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"95joWAGdhcmB4VN4"}
+{"studentId":"s4","subject":"Ciências","bimestre1":7.2,"bimestre2":8.5,"bimestre3":6.6,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"9ePlC9AvYRMZUnFW"}
+{"studentId":"s2","subject":"História","bimestre1":7,"bimestre2":7.1,"bimestre3":9,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"BrScn4MQLywOia7i"}
+{"studentId":"s3","subject":"História","bimestre1":6.2,"bimestre2":8.1,"bimestre3":8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"C1i59EygaIMZVy5E"}
+{"studentId":"s1","subject":"Química","bimestre1":6.7,"bimestre2":6.2,"bimestre3":8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"C4FwQxvXuDRCDPRL"}
+{"studentId":"s1","subject":"Artes","bimestre1":7.1,"bimestre2":7.7,"bimestre3":8.5,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"Cxn6N3Zvj5LBYlj6"}
+{"studentId":"s1","subject":"Inglês","bimestre1":8.9,"bimestre2":6.7,"bimestre3":9.8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"DYYqd6j3qqs67wgr"}
+{"studentId":"s1","subject":"Geografia","bimestre1":9.7,"bimestre2":5.7,"bimestre3":7.2,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"EtYVZo5vMHh3Libo"}
+{"studentId":"s4","subject":"Química","bimestre1":8.9,"bimestre2":9.4,"bimestre3":9.3,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"HA2kMWhyXCT8Ic5B"}
+{"studentId":"s2","subject":"Geografia","bimestre1":6.6,"bimestre2":6,"bimestre3":9.1,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"HqnGRj7CbHgzBXNN"}
+{"studentId":"s3","subject":"Artes","bimestre1":9.9,"bimestre2":7,"bimestre3":8.1,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"I3SbvaV81UMQAZBO"}
+{"studentId":"s4","subject":"História","bimestre1":7.5,"bimestre2":6.6,"bimestre3":8.4,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"JzicZMh3b7F0r79j"}
+{"studentId":"s4","subject":"Matemática","bimestre1":8.1,"bimestre2":7.5,"bimestre3":8.7,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"PdFvdNdSFb5yQ5su"}
+{"studentId":"s2","subject":"Inglês","bimestre1":9,"bimestre2":6.9,"bimestre3":10,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"Pe4ur7Evv7MwdwQP"}
+{"studentId":"s4","subject":"Educação Física","bimestre1":9.8,"bimestre2":6.1,"bimestre3":9.5,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"QeWIj9z5mS32KjlF"}
+{"studentId":"s4","subject":"Artes","bimestre1":6.9,"bimestre2":6.7,"bimestre3":7.3,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"RRmi1tReH9oG8wcB"}
+{"studentId":"s1","subject":"Português","bimestre1":7.4,"bimestre2":9.3,"bimestre3":7.3,"bimestre4":null,"teacher":"Prof. Ana Souza","_id":"US7ntzAy2lNbIg7i"}
+{"studentId":"s1","subject":"Matemática","bimestre1":7.5,"bimestre2":8.2,"bimestre3":7.3,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"VeQUdGii8c4nlrBf"}
+{"studentId":"s3","subject":"Geografia","bimestre1":8.9,"bimestre2":8.6,"bimestre3":6.3,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"WDL1uIj7QdO9KMWB"}
+{"studentId":"s3","subject":"Ciências","bimestre1":9.3,"bimestre2":7.2,"bimestre3":8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"WKoIdspyUVQhg7ot"}
+{"studentId":"s2","subject":"Português","bimestre1":9,"bimestre2":7,"bimestre3":8.9,"bimestre4":null,"teacher":"Prof. Ana Souza","_id":"WLCDH7WdRGGEYn3i"}
+{"studentId":"s3","subject":"Matemática","bimestre1":8.1,"bimestre2":8.7,"bimestre3":8.1,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"XpeEbHWqMxqhe2zF"}
+{"studentId":"s4","subject":"Inglês","bimestre1":6.7,"bimestre2":7.1,"bimestre3":6.7,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"ZJ2ZyGOUyFVo8Eki"}
+{"studentId":"s1","subject":"Educação Física","bimestre1":6.8,"bimestre2":9,"bimestre3":9,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"a4fIa2wPR4sKNbQE"}
+{"studentId":"s3","subject":"Educação Física","bimestre1":9.2,"bimestre2":7.7,"bimestre3":6.6,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"c5VayhU8ywFdPGd0"}
+{"studentId":"s4","subject":"Geografia","bimestre1":7.6,"bimestre2":8.3,"bimestre3":7,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"cuKkENStVGrYXtDw"}
+{"studentId":"s2","subject":"Artes","bimestre1":8.2,"bimestre2":7.5,"bimestre3":8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"ec8yBWf6Nxbn0lN0"}
+{"studentId":"s1","subject":"Física","bimestre1":6.9,"bimestre2":8.8,"bimestre3":6.8,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"fWYCuqBDaHkaIqLq"}
+{"studentId":"s4","subject":"Português","bimestre1":6.2,"bimestre2":8.4,"bimestre3":6.3,"bimestre4":null,"teacher":"Prof. Ana Souza","_id":"g2nsQCTsWeHiAC4v"}
+{"studentId":"s3","subject":"Inglês","bimestre1":7.1,"bimestre2":6,"bimestre3":9,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"jEnympZouGChVmyF"}
+{"studentId":"s1","subject":"Ciências","bimestre1":7.2,"bimestre2":6.1,"bimestre3":7.3,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"kM12gaTc1Vqz9E1W"}
+{"studentId":"s2","subject":"Matemática","bimestre1":9.2,"bimestre2":7.4,"bimestre3":6.9,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"l8d6NXVIqPVZzTuq"}
+{"studentId":"s2","subject":"Ciências","bimestre1":6,"bimestre2":9,"bimestre3":6.7,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"m7Tl9fIWiAiLRVXp"}
+{"studentId":"s3","subject":"Química","bimestre1":6,"bimestre2":9.5,"bimestre3":8,"bimestre4":null,"teacher":"Prof. Roberto Silva","_id":"qHfzDSUXUGyEFfsq"}
+{"studentId":"s4","subject":"Física","bimestre1":9.6,"bimestre2":6.5,"bimestre3":9,"bimestre4":null,"teacher":"Prof. Carlos Lima","_id":"qlroR2mWA2V0bLQY"}
+{"studentId":"s3","subject":"Português","bimestre1":8.6,"bimestre2":6.3,"bimestre3":7.8,"bimestre4":null,"teacher":"Prof. Ana Souza","_id":"usla76WatNESapqQ"}
